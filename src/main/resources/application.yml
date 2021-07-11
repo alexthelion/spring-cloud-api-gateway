@@ -1,0 +1,77 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+      routes:
+        - id: Test-Route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/test-a
+            - Method=GET
+          filters:
+            - RewritePath=/test-a, /test
+        - id: Hello-Route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/test-b
+            - Method=GET
+          filters:
+            - RewritePath=/test-b, /hello
+        - id: Test-C
+          uri: http://localhost:8081
+          predicates:
+            - Path=/test-c
+            - Method=GET
+          filters:
+            - RewritePath=/test-c, /test2
+        - id: Test-D
+          uri: http://localhost:8081
+          predicates:
+            - Path=/test-d
+            - Method=GET
+          filters:
+            - RewritePath=/test-d, /test3
+        - id: Test-E
+          uri: http://localhost:8081
+          predicates:
+            - Path=/test-e
+            - Method=GET
+          filters:
+            - RewritePath=/test-d, /test4
+
+        - id: Test-F
+          uri: http://localhost:8081
+          predicates:
+            - Path=/test-f
+            - Method=GET
+          filters:
+            - RewritePath=/test-f, /test5
+
+        - id: Test-E
+          uri: http://localhost:8081
+          predicates:
+            - Path=/test-e
+            - Method=GET
+          filters:
+            - RewritePath=/test-e, /test7
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+    reactor.netty: DEBUG
